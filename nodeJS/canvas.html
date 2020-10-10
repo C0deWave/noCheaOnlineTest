@@ -54,6 +54,7 @@
                 }
             }
 
+
             // 이벤트를 연결합니다. 
             canvas.addEventListener('mousedown', drawStart);
             canvas.addEventListener('mouseup', drawEnd);
@@ -69,6 +70,13 @@
             $('#sliderB').change(function () {
                 opacity = $(this).val() / 100;
             });
+
+            //이미지를 지우는 부분
+            document.getElementById('clearRect').onclick = function () {
+                alert("이미지 초기화ss");
+                ctx.clearRect(0, 0, 1000, 700);
+                socket.emit('clearRect','<%= room %>');
+            }
             // 소켓 이벤트를 연결합니다. 
             var socket = io.connect();
             socket.emit('join', '<%= room %>');
@@ -90,7 +98,7 @@
 <body>
     <table border="10">
         <tr>
-            <td rowspan="3">
+            <td rowspan="4">
                 <!-- 캔버스 --> <canvas id="canvas" width="1000" height="700"></canvas> </td>
             <td height="200">
                 <!-- 색상 선택기 -->
@@ -101,6 +109,12 @@
             <td height="25">
                 <!-- 슬라이더: 두께 선택 --> <input id="sliderA" type="range" min="0" max="20" value="5" /><br />
                 <!-- 슬라이더: 투명도 선택 --> <input id="sliderB" type="range" min="0" max="100" /> </td>
+        </tr>
+        <tr>
+            <!--이미지를 초기화 하는 버튼 만들기-->
+            <td height="25">
+                <input type="button" id="clearRect" value="이미지 초기화">
+            </td>
         </tr>
         <tr>
             <td style="background: orange;"></td>

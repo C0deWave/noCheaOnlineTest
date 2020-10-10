@@ -4,7 +4,6 @@ var express = require('express');
 var http = require('http');
 var ejs = require('ejs');
 var fs = require('fs');
-var multer = require('multer');
 
 //웹 서버를 생성합니다.
 var app = express();
@@ -85,4 +84,9 @@ io.sockets.on('connection', function (socket) {
     socket.on('create_room', function (data) {
         io.sockets.emit('create_room', data.toString());
     });
+
+    //여기서부터 진행을 하면 된다.
+    socket.on('clearRect',function (roomId) {
+        roomData[roomData.findIndex(x=>x.RoomName == roomId)].data = [];
+    })
 });
